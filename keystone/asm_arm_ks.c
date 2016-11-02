@@ -8,17 +8,15 @@
 
 static int assemble(RAsm *a, RAsmOp *ao, const char *str) {
 	ks_arch arch = KS_ARCH_ARM;
-	ks_mode mode;
+	ks_mode mode = KS_MODE_ARM;
 	switch (a->bits) {
 	case 16:
 		mode = KS_MODE_THUMB;
 		break;
-	case 32:
-		mode = KS_MODE_ARM;
-		break;
 	case 64:
-		mode = KS_MODE_64;
 		arch = KS_ARCH_ARM64;
+		mode = KS_MODE_LITTLE_ENDIAN;
+		a->big_endian = false;
 		break;
 	}
 	if (a->big_endian) {
@@ -37,7 +35,7 @@ RAsmPlugin r_asm_plugin_arm_ks = {
 };
 
 #ifndef CORELIB
-struct r_lib_struct_t radare_plugin = {
+RLibStruct radare_plugin = {
 	.type = R_LIB_TYPE_ASM,
 	.data = &r_asm_plugin_arm_ks,
 	.version = R2_VERSION

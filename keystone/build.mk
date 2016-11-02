@@ -11,8 +11,9 @@ else
 SO_EXT=so
 endif
 endif
+O_EXT=o
 
-KS_CFLAGS=-I/usr/local/include
-KS_LDFLAGS=-L/usr/local/lib
+KS_CFLAGS=$(shell pkg-config --cflags keystone)
+KS_LDFLAGS=$(shell pkg-config --libs keystone)
 KS_LINK=-lkeystone
 CFLAGS+=-Wextern-c-compat
